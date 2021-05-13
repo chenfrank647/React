@@ -3,6 +3,7 @@ import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
 import Translate from './components/Translate';
+import Header from './components/Header';
 
 const items = [
     {
@@ -34,11 +35,34 @@ const options = [
     }
 ];
 
-export default () => {
-    const [selected, setSelected] = useState(options[0]);
+const showAccordion = () => {
+    if(window.location.pathname ==='/'){
+        return <Accordion items={items}/>;
+    }
+}
+const showSearch = () => {
+    if(window.location.pathname ==='/search'){
+        return <Search />;
+    }
+}
+const showDropdown = (selected, setSelected) => {
+    
+    if(window.location.pathname ==='/dropdown'){
+        return <Dropdown selected = {selected} onSelectedChange = {setSelected} options={options} prompt = 'Select a color'/>;
+    }
+}
+const showTranslate = () => {
+    if(window.location.pathname ==='/translate'){
+        return <Translate/>;
+    }
+}
 
+const App = () => {
+    const [selected, setSelected] = useState(options[0]);
     return (
         
-        <div><Translate/><Dropdown selected = {selected} onSelectedChange = {setSelected} options={options} prompt = 'Select a color'/><Search /><Accordion items={items}/></div>
+        <div><Header/>{showAccordion()}{showSearch()}{showDropdown(selected, setSelected)}{showTranslate()}</div>
     );
 };
+
+export default App;
